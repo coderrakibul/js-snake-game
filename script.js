@@ -14,8 +14,14 @@ function init() {
     createFood();
 }
 
-function createFood(){
-    food = {x:Math.floor(Math.random() * 39), y:Math.floor(Math.random() * 24)};
+function createFood() {
+    food = { x: Math.floor(Math.random() * 39), y: Math.floor(Math.random() * 24) };
+    for (let i = 0; i < balls.length; i++) {
+        let ball = balls[i];
+        if (food.x == ball.x && food.y == ball.y) {
+            createFood();
+        }
+    }
 }
 
 init();
@@ -58,7 +64,7 @@ function animation() {
     balls.shift();
     add()
     let lastBall = balls[balls.length - 1];
-    if(lastBall.x == food.x*20 && lastBall.y == food.y*20){
+    if (lastBall.x == food.x * 20 && lastBall.y == food.y * 20) {
         score += 5;
         add();
         createFood();
@@ -88,11 +94,15 @@ function animation() {
         }
 
         //game over
-        
+        // if (ball.x == lastBall.x && ball.y == lastBall.y && i < balls.length - 2) {
+        //     alert("Game Over, Your Score is " + score);
+        //     init();
+        // }
+
 
         ctx.fillRect(ball.x, ball.y, 19, 19);
     }
-    ctx.fillRect(food.x*20, food.y*20, 19, 19);
+    ctx.fillRect(food.x * 20, food.y * 20, 19, 19);
     ctx.fillText("Score: " + score, 380, 480);
 }
 setInterval(animation, 222);
